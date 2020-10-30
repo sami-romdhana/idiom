@@ -1,0 +1,19 @@
+.Cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5em;
+  height: 1.5em;
+  border: 2px solid #555;
+  background-color: white;
+  font-size: 2em;
+  text-transform: uppercase;
+}
+
+.Cell--correct {
+  background-color: var(--color-palette-green);
+}
+
+.Cell--misplaced {
+  background-color: var(--color-palette-yellow);
+}

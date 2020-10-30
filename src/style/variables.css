@@ -3,4 +3,10 @@
 
   --color-background: rgb(238, 232, 212);
   --color-text: #444;
+
+  --color-palette-blue: rgb(170, 209, 253);
+  --color-palette-green: rgb(211, 255, 231);
+  --color-palette-yellow: rgb(255, 250, 210);
+  --color-palette-red: rgb(255, 220, 220);
+  --color-palette-pink: rgb(255, 214, 250);
 }
