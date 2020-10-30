@@ -3,3 +3,7 @@
   flex-direction: column;
   align-items: center;
 }
+
+.Round--grid {
+  margin-bottom: 1.5em;
+}
