@@ -25,7 +25,7 @@ export default function Round(props: RoundProps) {
   );
 
   const attempt = useCallback(() => {
-    if (wordLength === 0) return;
+    if (value.length !== wordLength) return;
 
     setPastAttempts((attempts) => {
       const newAttempts = attempts.concat();
@@ -56,6 +56,10 @@ export default function Round(props: RoundProps) {
 
   return (
     <div className="Round">
+      <div className="Round--known">
+        The first letter is "{word[0].toUpperCase()}".
+      </div>
+
       <div className="Round--grid">
         {pastAttempts.map((attempt, position) => (
           <Row key={attempt + position} attemptWord={attempt} goalWord={word} />
@@ -90,5 +94,5 @@ export default function Round(props: RoundProps) {
 }
 
 function getInitialAttempts(length: number) {
-  return Math.max(7, Math.pow(length - 7, 2) + 7);
+  return Math.max(7, Math.pow(Math.max(length, 8) - 7, 2) + 7);
 }
