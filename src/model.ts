@@ -10,3 +10,11 @@ export enum RoundState {
   Lost,
   Won,
 }
+
+export type RoundResult = RoundState.Lost | RoundState.Won;
+
+export interface GameState {
+  difficulty: number;
+  round: number;
+  word: string | null;
+}

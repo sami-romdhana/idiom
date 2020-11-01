@@ -1,16 +1,24 @@
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import range from "lodash/range";
-import { RoundState } from "model";
+import { RoundResult, RoundState } from "model";
 import Row from "components/Row";
 import "./style.css";
 
 interface RoundProps {
   word: string;
+  onEnd: (result: RoundResult) => unknown;
 }
 
 export default function Round(props: RoundProps) {
-  const { word } = props;
+  const { word, onEnd } = props;
 
+  const inputRef = useRef<HTMLInputElement>(null);
   const wordLength = useMemo(() => word.length, [word]);
 
   const [pastAttempts, setPastAttempts] = useState<Array<string>>([]);
@@ -52,7 +60,14 @@ export default function Round(props: RoundProps) {
   useEffect(() => {
     setPastAttempts([]);
     setAttemptsLeft(getInitialAttempts(wordLength));
+    inputRef.current?.focus();
   }, [word, wordLength]);
+
+  useEffect(() => {
+    if (roundState === RoundState.Ongoing) return;
+
+    onEnd(roundState);
+  }, [roundState, onEnd]);
 
   return (
     <div className="Round">
@@ -77,6 +92,7 @@ export default function Round(props: RoundProps) {
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            ref={inputRef}
           />
           <button onClick={attempt}>Attempt</button>
         </div>
