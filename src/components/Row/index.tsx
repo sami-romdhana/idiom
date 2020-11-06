@@ -4,7 +4,7 @@ import { LetterState } from "model";
 import Cell from "components/Cell";
 import "./style.css";
 
-interface RowProps {
+export interface RowProps {
   goalWord: string;
   attemptWord?: string;
 }
@@ -19,7 +19,11 @@ export default function Row(props: RowProps) {
     return (
       <div className="Row">
         {wordRange.map((letter) => {
-          return <Cell key={letter} state={LetterState.Default}></Cell>;
+          return (
+            <div className="Row--cell">
+              <Cell key={letter} state={LetterState.Default}></Cell>
+            </div>
+          );
         })}
       </div>
     );
@@ -30,12 +34,14 @@ export default function Row(props: RowProps) {
       {wordRange.map((position) => {
         const letter = letters[position];
         return (
-          <Cell
-            key={letter + position}
-            state={getWordState(goalWord, position, letter)}
-          >
-            {letter}
-          </Cell>
+          <div className="Row--cell">
+            <Cell
+              key={letter + position}
+              state={getWordState(goalWord, position, letter)}
+            >
+              {letter}
+            </Cell>
+          </div>
         );
       })}
     </div>

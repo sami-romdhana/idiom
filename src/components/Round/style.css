@@ -7,3 +7,7 @@
 .Round--grid {
   margin-bottom: 1.5em;
 }
+
+.Round--row:not(:first-child) {
+  margin-top: 3px;
+}

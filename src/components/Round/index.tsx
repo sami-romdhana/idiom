@@ -8,7 +8,7 @@ import React, {
 import range from "lodash/range";
 import last from "lodash/last";
 import { RoundResult, RoundState } from "model";
-import Row from "components/Row";
+import Row, { RowProps } from "components/Row";
 import Input from "components/Input";
 import "./style.css";
 
@@ -78,7 +78,7 @@ export default function Round(props: RoundProps) {
     <div className="Round">
       <div className="Round--grid">
         {pastAttempts.map((attempt, position) => (
-          <Row
+          <RoundRow
             key={word + attempt + position}
             attemptWord={attempt}
             goalWord={word}
@@ -86,7 +86,7 @@ export default function Round(props: RoundProps) {
         ))}
 
         {roundState === RoundState.Ongoing && (
-          <Row
+          <RoundRow
             key={word + "known"}
             attemptWord={knownLetters}
             goalWord={word}
@@ -95,7 +95,7 @@ export default function Round(props: RoundProps) {
 
         {roundState !== RoundState.Lost &&
           range(1, attemptsLeft).map((position) => (
-            <Row key={word + position} goalWord={word} />
+            <RoundRow key={word + position} goalWord={word} />
           ))}
       </div>
 
@@ -112,6 +112,14 @@ export default function Round(props: RoundProps) {
       {roundState === RoundState.Lost && (
         <div className="Round--text">You lost... the word was "{word}".</div>
       )}
+    </div>
+  );
+}
+
+function RoundRow(props: RowProps) {
+  return (
+    <div className="Round--row">
+      <Row {...props} />
     </div>
   );
 }

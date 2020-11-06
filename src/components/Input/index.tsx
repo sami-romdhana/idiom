@@ -1,3 +1,4 @@
+import Row from "components/Row";
 import React, { useCallback, useState } from "react";
 import "./style.css";
 
@@ -31,14 +32,20 @@ export default function Input(props: InputProps) {
 
   return (
     <div className="Input">
-      <input
-        type="text"
-        value={value}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        maxLength={length}
-        ref={inputRef}
-      />
+      <div className="Input--wrapper">
+        <Row
+          goalWord={"_".repeat(length)}
+          attemptWord={value.padEnd(length, " ")}
+        />
+        <input
+          type="text"
+          value={value}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          maxLength={length}
+          ref={inputRef}
+        />
+      </div>
       <button onClick={attempt}>Attempt</button>
     </div>
   );
