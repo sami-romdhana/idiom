@@ -1,6 +1,5 @@
 :root {
-  --font-display: "Comfortaa";
-  --font-text: "Assistant";
+  --font-text: "Epilogue";
   --color-correct: rgb(118, 255, 180);
   --color-misplaced: rgb(255, 174, 0);
 
@@ -15,4 +14,12 @@
   --color-palette-yellow: rgb(255, 250, 210);
   --color-palette-red: rgb(255, 220, 220);
   --color-palette-pink: rgb(255, 214, 250);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: rgb(58, 58, 58);
+    --color-text: rgb(255, 255, 255);
+    --color-border: rgb(226, 226, 226);
+  }
 }

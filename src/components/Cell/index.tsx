@@ -1,19 +1,19 @@
 import React from "react";
 import classnames from "classnames";
-import { LetterState } from "model";
+import { LetterStatus } from "model";
 import "./style.css";
 
 interface CellProps {
-  state: LetterState;
+  state: LetterStatus;
 }
 
 export default function Cell(props: React.PropsWithChildren<CellProps>) {
   return (
     <div
       className={classnames("Cell", {
-        "Cell--correct": props.state === LetterState.Correct,
-        "Cell--misplaced": props.state === LetterState.Misplaced,
-        "Cell--incorrect": props.state === LetterState.Incorrect,
+        "Cell--correct": props.state === LetterStatus.Correct,
+        "Cell--misplaced": props.state === LetterStatus.Misplaced,
+        "Cell--incorrect": props.state === LetterStatus.Incorrect,
       })}
     >
       <div>{props.children}</div>

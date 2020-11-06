@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import range from "lodash/range";
-import { LetterState } from "model";
+import { LetterStatus } from "model";
 import Cell from "components/Cell";
 import "./style.css";
 
@@ -21,7 +21,7 @@ export default function Row(props: RowProps) {
         {wordRange.map((letter) => {
           return (
             <div className="Row--cell">
-              <Cell key={letter} state={LetterState.Default}></Cell>
+              <Cell key={letter} state={LetterStatus.Default}></Cell>
             </div>
           );
         })}
@@ -49,9 +49,9 @@ export default function Row(props: RowProps) {
 }
 
 function getWordState(word: string, position: number, letter: string) {
-  if (word.charAt(position) === letter) return LetterState.Correct;
+  if (word.charAt(position) === letter) return LetterStatus.Correct;
 
-  if (word.includes(letter)) return LetterState.Misplaced;
+  if (word.includes(letter)) return LetterStatus.Misplaced;
 
-  return LetterState.Incorrect;
+  return LetterStatus.Incorrect;
 }

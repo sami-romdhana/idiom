@@ -3,12 +3,9 @@ import "./style.css";
 
 export default function Title() {
   return (
-    <h1 className="Title">
-      <span>I</span>
-      <span>D</span>
-      <span>I</span>
-      <span>O</span>
-      <span>M</span>
-    </h1>
+    <div className="Title">
+      <h1>Idiom</h1>
+      <p>The rogue-lite word game</p>
+    </div>
   );
 }

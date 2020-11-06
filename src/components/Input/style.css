@@ -1,11 +1,13 @@
 .Input--wrapper {
   position: relative;
   padding: 3px;
-  background-color: var(--color-text);
+  background-color: black;
+  border-radius: 4px;
 }
 
 .Input--wrapper:focus-within {
   background-color: rgb(26, 124, 236);
+  box-shadow: 0 0 15px -2px rgb(26, 124, 236);
 }
 
 .Input--wrapper > :not(input) {

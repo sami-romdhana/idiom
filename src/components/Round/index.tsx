@@ -5,9 +5,8 @@ import React, {
   useRef,
   useState,
 } from "react";
-import range from "lodash/range";
 import last from "lodash/last";
-import { RoundResult, RoundState } from "model";
+import { RoundResult, Status } from "model";
 import Row, { RowProps } from "components/Row";
 import Input from "components/Input";
 import "./style.css";
@@ -43,13 +42,13 @@ export default function Round(props: RoundProps) {
   );
 
   const roundState = useMemo(() => {
-    if (last(pastAttempts) === word) return RoundState.Won;
-    if (attemptsLeft > 0) return RoundState.Ongoing;
-    return RoundState.Lost;
+    if (last(pastAttempts) === word) return Status.Won;
+    if (attemptsLeft > 0) return Status.Ongoing;
+    return Status.Lost;
   }, [attemptsLeft, pastAttempts, word]);
 
   useEffect(() => {
-    if (roundState !== RoundState.Ongoing) onEnd(roundState);
+    if (roundState !== Status.Ongoing) onEnd(roundState);
   }, [roundState, onEnd]);
 
   useEffect(() => {
@@ -76,16 +75,16 @@ export default function Round(props: RoundProps) {
 
   return (
     <div className="Round">
-      <div className="Round--grid">
-        {pastAttempts.map((attempt, position) => (
-          <RoundRow
-            key={word + attempt + position}
-            attemptWord={attempt}
-            goalWord={word}
-          />
-        ))}
+      {roundState === Status.Ongoing && (
+        <div className="Round--input">
+          <Input length={wordLength} onAttempt={attempt} inputRef={inputRef} />
+        </div>
+      )}
 
-        {roundState === RoundState.Ongoing && (
+      <div className="Round--grid">
+        <h2>Known words</h2>
+
+        {roundState === Status.Ongoing && (
           <RoundRow
             key={word + "known"}
             attemptWord={knownLetters}
@@ -93,23 +92,20 @@ export default function Round(props: RoundProps) {
           />
         )}
 
-        {roundState !== RoundState.Lost &&
-          range(1, attemptsLeft).map((position) => (
-            <RoundRow key={word + position} goalWord={word} />
-          ))}
+        <h2>Past attempts</h2>
+
+        {pastAttempts.map((attempt, position) => (
+          <RoundRow
+            key={word + attempt + position}
+            attemptWord={attempt}
+            goalWord={word}
+          />
+        ))}
       </div>
 
-      {roundState === RoundState.Ongoing && (
-        <div className="Round--input">
-          <Input length={wordLength} onAttempt={attempt} inputRef={inputRef} />
-        </div>
-      )}
+      {roundState === Status.Won && <div className="Round--text">You won!</div>}
 
-      {roundState === RoundState.Won && (
-        <div className="Round--text">You won!</div>
-      )}
-
-      {roundState === RoundState.Lost && (
+      {roundState === Status.Lost && (
         <div className="Round--text">You lost... the word was "{word}".</div>
       )}
     </div>

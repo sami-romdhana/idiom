@@ -4,5 +4,5 @@
 }
 
 .Row--cell:not(:first-child) {
-  margin-left: 3px;
+  margin-left: 0.17em;
 }

@@ -1,19 +1,20 @@
-export enum LetterState {
+export enum LetterStatus {
   Correct,
   Misplaced,
   Incorrect,
   Default,
 }
 
-export enum RoundState {
+export enum Status {
   Ongoing,
   Lost,
   Won,
 }
 
-export type RoundResult = RoundState.Lost | RoundState.Won;
+export type RoundResult = Status.Lost | Status.Won;
 
 export interface GameState {
+  status: Status;
   difficulty: number;
   round: number;
   word: string | null;
@@ -25,4 +26,8 @@ export interface GameState {
 export interface DefensePart {
   max: number;
   value: number;
+}
+
+export enum Locale {
+  EN = "en",
 }
