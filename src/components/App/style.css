@@ -7,3 +7,29 @@
   margin-top: 20px;
   margin-bottom: 40px;
 }
+
+.App--language {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App--language > label {
+  display: block;
+  padding: 0.5em;
+}
+
+.App--language > label > span {
+  margin-right: 0.8em;
+}
+
+.App--language > label > select {
+  border: none;
+  padding: 0.3em 0.5em;
+  border-radius: 0.3em;
+  background-color: rgba(0, 0, 0, 0.15);
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}

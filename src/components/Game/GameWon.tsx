@@ -1,5 +1,8 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 export default function GameWon() {
-  return <div className="GameWon">You have won!</div>;
+  const { t } = useTranslation();
+
+  return <div className="GameWon">{t("GAME.END.WIN")}</div>;
 }

@@ -5,8 +5,11 @@ import React, {
   useEffect,
   useState,
   PropsWithChildren,
+  useMemo,
 } from "react";
-import { GameState, Locale, RoundResult, Status } from "model";
+import { GameState, RoundResult, Status } from "model";
+import { getWords } from "words";
+import { useTranslation } from "react-i18next";
 
 interface IGameContext {
   state: GameState;
@@ -35,6 +38,9 @@ const GameContext = createContext<IGameContext>({
 });
 
 export function GameProvider(props: PropsWithChildren<{}>) {
+  const { i18n } = useTranslation();
+  const language = useMemo(() => i18n.languages[0], [i18n.languages]);
+
   const [state, setState] = useState<GameState>({
     status: Status.Ongoing,
     difficulty: 3,
@@ -76,7 +82,7 @@ export function GameProvider(props: PropsWithChildren<{}>) {
     let cancelled = false;
 
     (async () => {
-      const word = await getRandomWord(state.difficulty);
+      const word = await getRandomWord(state.difficulty, language);
       if (cancelled) return;
       setState((state) => ({
         ...state,
@@ -88,7 +94,7 @@ export function GameProvider(props: PropsWithChildren<{}>) {
     return () => {
       cancelled = true;
     };
-  }, [setState, state.difficulty, state.round]);
+  }, [setState, state.difficulty, state.round, language]);
 
   return (
     <GameContext.Provider
@@ -141,18 +147,8 @@ function computeNextRound(state: GameState, result: RoundResult) {
   };
 }
 
-async function getRandomWord(length: number) {
-  const words = await getWords(Locale.EN);
+async function getRandomWord(length: number, locale: string) {
+  const words = await getWords(locale);
   const array = words.filter((word) => word.length === length);
   return array[Math.floor(Math.random() * array.length)];
-}
-
-async function getWords(locale: Locale) {
-  switch (locale) {
-    case Locale.EN:
-      const wordObj = await import("words/en.json");
-      return wordObj.en;
-    default:
-      throw new Error("Unknown locale: " + locale);
-  }
 }

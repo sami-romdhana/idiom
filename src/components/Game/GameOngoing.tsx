@@ -1,30 +1,48 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import Round from "components/Round";
 import { useGame } from "./useGame";
 import heartIcon from "./images/heart.png";
 import shieldIcon from "./images/shield.png";
 
 export default function GameOngoing() {
+  const { t } = useTranslation();
   const { state, onRoundEnd, onFailedAttempt } = useGame();
 
   return (
     <>
-      <div>
-        Difficulty: {state.difficulty} | Round: {state.round}
-      </div>
-
       <div className="Game--stats">
         <div>
-          <img alt="Health" src={heartIcon} />
-          <span>
-            {state.health.value} / {state.health.max}
-          </span>
+          <div className="Game--valign">
+            <img src={heartIcon} alt={t("GAME.INFO.HEALTH")} />
+            <div>{t("GAME.INFO.HEALTH")}</div>
+          </div>
+          <div className="Game--valign">
+            <span className="Game--stat">{state.health.value}</span>
+            <span>/ {state.health.max}</span>
+          </div>
+        </div>
+
+        <div>
+          <div className="Game--valign">
+            <img src={shieldIcon} alt={t("GAME.INFO.SHIELD")} />
+            <div>{t("GAME.INFO.SHIELD")}</div>
+          </div>
+          <div className="Game--valign">
+            <span className="Game--stat">{state.armor.value}</span>
+            <span>/ {state.armor.max}</span>
+          </div>
+        </div>
+      </div>
+
+      <div className="Game--stats Game--stats-mini">
+        <div>
+          <div>{t("GAME.INFO.DIFFICULTY")}</div>
+          <div className="Game--stat">{state.difficulty}</div>
         </div>
         <div>
-          <img alt="Shield" src={shieldIcon} />
-          <span>
-            {state.armor.value} / {state.armor.max}
-          </span>
+          <div>{t("GAME.INFO.ROUND")}</div>
+          <div className="Game--stat">{state.round + 1}</div>
         </div>
       </div>
 
@@ -37,7 +55,7 @@ export default function GameOngoing() {
           onFailedAttempt={onFailedAttempt}
         />
       ) : (
-        <p>Loading...</p>
+        <p>{t("COMMON.VERB.LOADING")}</p>
       )}
     </>
   );

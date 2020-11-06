@@ -1,0 +1,35 @@
+{
+  "COMMON": {
+    "VERB": {
+      "LOADING": "Loading"
+    }
+  },
+
+  "TAGLINE": "The rogue-lite word game",
+
+  "START": {
+    "BUTTON": "Start game",
+    "LANGUAGE": "Language"
+  },
+
+  "GAME": {
+    "INFO": {
+      "HEALTH": "Health",
+      "SHIELD": "Shield",
+      "DIFFICULTY": "Difficulty",
+      "ROUND": "Round",
+
+      "KNOWN": "Known letters",
+      "ATTEMPTS": "Past attempts"
+    },
+
+    "BUTTON": {
+      "ATTEMPT": "Attempt"
+    },
+
+    "END": {
+      "WIN": "You have won!",
+      "LOSS": "You have lost."
+    }
+  }
+}

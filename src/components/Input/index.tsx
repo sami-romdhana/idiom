@@ -1,5 +1,6 @@
-import Row from "components/Row";
 import React, { useCallback, useState } from "react";
+import { useTranslation } from "react-i18next";
+import Row from "components/Row";
 import "./style.css";
 
 interface InputProps {
@@ -10,6 +11,9 @@ interface InputProps {
 
 export default function Input(props: InputProps) {
   const { length, onAttempt, inputRef } = props;
+
+  const { t } = useTranslation();
+
   const [value, setValue] = useState("");
 
   const attempt = useCallback(() => {
@@ -37,6 +41,7 @@ export default function Input(props: InputProps) {
           goalWord={"_".repeat(length)}
           attemptWord={value.padEnd(length, " ")}
         />
+
         <input
           type="text"
           value={value}
@@ -46,7 +51,8 @@ export default function Input(props: InputProps) {
           ref={inputRef}
         />
       </div>
-      <button onClick={attempt}>Attempt</button>
+
+      <button onClick={attempt}>{t("GAME.BUTTON.ATTEMPT")}</button>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 :root {
-  --font-text: "Epilogue";
+  --font-text: "Epilogue", sans-serif;
   --color-correct: rgb(118, 255, 180);
   --color-misplaced: rgb(255, 174, 0);
 

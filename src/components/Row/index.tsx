@@ -20,8 +20,8 @@ export default function Row(props: RowProps) {
       <div className="Row">
         {wordRange.map((letter) => {
           return (
-            <div className="Row--cell">
-              <Cell key={letter} state={LetterStatus.Default}></Cell>
+            <div className="Row--cell" key={letter}>
+              <Cell state={LetterStatus.Default}></Cell>
             </div>
           );
         })}
@@ -34,11 +34,8 @@ export default function Row(props: RowProps) {
       {wordRange.map((position) => {
         const letter = letters[position];
         return (
-          <div className="Row--cell">
-            <Cell
-              key={letter + position}
-              state={getWordState(goalWord, position, letter)}
-            >
+          <div className="Row--cell" key={letter + position}>
+            <Cell state={getWordState(goalWord, position, letter)}>
               {letter}
             </Cell>
           </div>
@@ -50,8 +47,6 @@ export default function Row(props: RowProps) {
 
 function getWordState(word: string, position: number, letter: string) {
   if (word.charAt(position) === letter) return LetterStatus.Correct;
-
   if (word.includes(letter)) return LetterStatus.Misplaced;
-
   return LetterStatus.Incorrect;
 }

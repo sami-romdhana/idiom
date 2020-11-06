@@ -5,6 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
+import { useTranslation } from "react-i18next";
 import last from "lodash/last";
 import { RoundResult, Status } from "model";
 import Row, { RowProps } from "components/Row";
@@ -20,6 +21,8 @@ interface RoundProps {
 
 export default function Round(props: RoundProps) {
   const { word, initialAttempts, onEnd, onFailedAttempt } = props;
+
+  const { t } = useTranslation();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const wordLength = useMemo(() => word.length, [word]);
@@ -82,32 +85,32 @@ export default function Round(props: RoundProps) {
       )}
 
       <div className="Round--grid">
-        <h2>Known words</h2>
-
         {roundState === Status.Ongoing && (
-          <RoundRow
-            key={word + "known"}
-            attemptWord={knownLetters}
-            goalWord={word}
-          />
+          <>
+            <h2>{t("GAME.INFO.KNOWN")}</h2>
+
+            <RoundRow
+              key={word + "known"}
+              attemptWord={knownLetters}
+              goalWord={word}
+            />
+          </>
         )}
 
-        <h2>Past attempts</h2>
+        {!!pastAttempts.length && (
+          <>
+            <h2>{t("GAME.INFO.ATTEMPTS")}</h2>
 
-        {pastAttempts.map((attempt, position) => (
-          <RoundRow
-            key={word + attempt + position}
-            attemptWord={attempt}
-            goalWord={word}
-          />
-        ))}
+            {pastAttempts.map((attempt, position) => (
+              <RoundRow
+                key={word + attempt + position}
+                attemptWord={attempt}
+                goalWord={word}
+              />
+            ))}
+          </>
+        )}
       </div>
-
-      {roundState === Status.Won && <div className="Round--text">You won!</div>}
-
-      {roundState === Status.Lost && (
-        <div className="Round--text">You lost... the word was "{word}".</div>
-      )}
     </div>
   );
 }

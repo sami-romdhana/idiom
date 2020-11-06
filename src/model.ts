@@ -30,4 +30,5 @@ export interface DefensePart {
 
 export enum Locale {
   EN = "en",
+  FR = "fr",
 }

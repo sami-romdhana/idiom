@@ -1,0 +1,35 @@
+{
+  "COMMON": {
+    "VERB": {
+      "LOADING": "Chargement"
+    }
+  },
+
+  "TAGLINE": "Le jeu de lettres rogue-lite",
+
+  "START": {
+    "BUTTON": "Lancer le jeu",
+    "LANGUAGE": "Langue"
+  },
+
+  "GAME": {
+    "INFO": {
+      "HEALTH": "Vie",
+      "SHIELD": "Bouclier",
+      "DIFFICULTY": "Difficulté",
+      "ROUND": "Round",
+
+      "KNOWN": "Lettres connues",
+      "ATTEMPTS": "Essais précédents"
+    },
+
+    "BUTTON": {
+      "ATTEMPT": "Essayer"
+    },
+
+    "END": {
+      "WIN": "Vous avez gagné!",
+      "LOSS": "Vous avez perdu."
+    }
+  }
+}

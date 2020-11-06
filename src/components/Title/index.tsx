@@ -1,11 +1,14 @@
 import React from "react";
+import { useTranslation } from "react-i18next";
 import "./style.css";
 
 export default function Title() {
+  const { t } = useTranslation();
+
   return (
     <div className="Title">
       <h1>Idiom</h1>
-      <p>The rogue-lite word game</p>
+      <p>{t("TAGLINE")}</p>
     </div>
   );
 }
