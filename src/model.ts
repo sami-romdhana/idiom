@@ -17,4 +17,12 @@ export interface GameState {
   difficulty: number;
   round: number;
   word: string | null;
+  armor: DefensePart;
+  health: DefensePart;
+  attempts: number;
+}
+
+export interface DefensePart {
+  max: number;
+  value: number;
 }

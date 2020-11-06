@@ -16,7 +16,7 @@ export default function Cell(props: React.PropsWithChildren<CellProps>) {
         "Cell--incorrect": props.state === LetterState.Incorrect,
       })}
     >
-      {props.children}
+      <div>{props.children}</div>
     </div>
   );
 }

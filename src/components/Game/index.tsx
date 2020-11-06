@@ -1,33 +1,74 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { GameState, RoundResult, RoundState } from "model";
 import Round from "components/Round";
+import heartIcon from "./images/heart.png";
+import shieldIcon from "./images/shield.png";
+import "./style.css";
 
 export default function Game() {
   const [state, setState] = useState<GameState>({
     difficulty: 3,
     round: 0,
+    armor: {
+      max: 5,
+      value: 5,
+    },
+    health: {
+      max: 3,
+      value: 3,
+    },
+    attempts: 0,
     word: null,
   });
 
+  const onFailedAttempt = useCallback(() => {
+    setState((state) => ({
+      ...state,
+      armor: {
+        ...state.armor,
+        value: Math.max(0, state.armor.value - 1),
+      },
+      health: {
+        ...state.health,
+        value:
+          state.armor.value > 0
+            ? state.health.value
+            : Math.max(0, state.health.value - 1),
+      },
+    }));
+  }, [setState]);
+
   const onRoundEnd = useCallback((result: RoundResult) => {
-    if (result === RoundState.Won) {
-      setState((state) => {
-        const round = state.round + 1;
+    if (result !== RoundState.Won) {
+      return;
+    }
 
-        if (round < state.difficulty) {
-          return {
-            ...state,
-            round,
-          };
-        }
+    setState((state) => {
+      const round = state.round + 1;
 
+      if (round < state.difficulty) {
         return {
           ...state,
-          difficulty: state.difficulty + 1,
-          round: 0,
+          armor: {
+            ...state.armor,
+            value: state.armor.max,
+          },
+          round,
         };
-      });
-    }
+      }
+
+      const newArmorMax = state.armor.max + 1;
+
+      return {
+        ...state,
+        armor: {
+          max: newArmorMax,
+          value: newArmorMax,
+        },
+        difficulty: state.difficulty + 1,
+        round: 0,
+      };
+    });
   }, []);
 
   useEffect(() => {
@@ -36,7 +77,11 @@ export default function Game() {
     (async () => {
       const word = await getRandomWord(state.difficulty);
       if (cancelled) return;
-      setState((state) => ({ ...state, word }));
+      setState((state) => ({
+        ...state,
+        word,
+        attempts: state.armor.value + state.health.value,
+      }));
     })();
 
     return () => {
@@ -46,12 +91,33 @@ export default function Game() {
 
   return (
     <div className="Game">
-      <p>
+      <div>
         Difficulty: {state.difficulty} | Round: {state.round}
-      </p>
+      </div>
+
+      <div className="Game--stats">
+        <div>
+          <img alt="Health" src={heartIcon} />
+          <span>
+            {state.health.value} / {state.health.max}
+          </span>
+        </div>
+        <div>
+          <img alt="Shield" src={shieldIcon} />
+          <span>
+            {state.armor.value} / {state.armor.max}
+          </span>
+        </div>
+      </div>
 
       {!!state.word ? (
-        <Round word={state.word} onEnd={onRoundEnd} />
+        <Round
+          key={state.difficulty + "-" + state.round}
+          word={state.word}
+          initialAttempts={state.attempts}
+          onEnd={onRoundEnd}
+          onFailedAttempt={onFailedAttempt}
+        />
       ) : (
         <p>Loading...</p>
       )}

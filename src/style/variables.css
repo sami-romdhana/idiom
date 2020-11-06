@@ -1,8 +1,14 @@
 :root {
-  --font: "Grandstander";
+  --font-display: "Comfortaa";
+  --font-text: "Assistant";
+  --color-correct: rgb(118, 255, 180);
+  --color-misplaced: rgb(255, 174, 0);
+
+  --size-text: 18px;
 
   --color-background: rgb(238, 232, 212);
   --color-text: #444;
+  --color-border: #666;
 
   --color-palette-blue: rgb(170, 209, 253);
   --color-palette-green: rgb(211, 255, 231);

@@ -6,23 +6,26 @@ import React, {
   useState,
 } from "react";
 import range from "lodash/range";
+import last from "lodash/last";
 import { RoundResult, RoundState } from "model";
 import Row from "components/Row";
 import "./style.css";
 
 interface RoundProps {
   word: string;
+  initialAttempts: number;
   onEnd: (result: RoundResult) => unknown;
+  onFailedAttempt: () => unknown;
 }
 
 export default function Round(props: RoundProps) {
-  const { word, onEnd } = props;
+  const { word, initialAttempts, onEnd, onFailedAttempt } = props;
 
   const inputRef = useRef<HTMLInputElement>(null);
   const wordLength = useMemo(() => word.length, [word]);
 
   const [pastAttempts, setPastAttempts] = useState<Array<string>>([]);
-  const [attemptsLeft, setAttemptsLeft] = useState<number>(0);
+  const [attemptsLeft, setAttemptsLeft] = useState<number>(initialAttempts);
   const [value, setValue] = useState("");
 
   const onChange = useCallback(
@@ -52,14 +55,13 @@ export default function Round(props: RoundProps) {
   );
 
   const roundState = useMemo(() => {
-    if (pastAttempts[pastAttempts.length - 1] === word) return RoundState.Won;
+    if (last(pastAttempts) === word) return RoundState.Won;
     if (attemptsLeft > 0) return RoundState.Ongoing;
     return RoundState.Lost;
   }, [attemptsLeft, pastAttempts, word]);
 
   useEffect(() => {
     setPastAttempts([]);
-    setAttemptsLeft(getInitialAttempts(wordLength));
     inputRef.current?.focus();
   }, [word, wordLength]);
 
@@ -68,6 +70,10 @@ export default function Round(props: RoundProps) {
 
     onEnd(roundState);
   }, [roundState, onEnd]);
+
+  useEffect(() => {
+    if (pastAttempts.length && last(pastAttempts) !== word) onFailedAttempt();
+  }, [pastAttempts, word, onFailedAttempt]);
 
   return (
     <div className="Round">
@@ -107,8 +113,4 @@ export default function Round(props: RoundProps) {
       )}
     </div>
   );
-}
-
-function getInitialAttempts(length: number) {
-  return Math.max(7, Math.pow(Math.max(length, 8) - 7, 2) + 7);
 }
