@@ -89,6 +89,14 @@ export default function Game() {
     };
   }, [setState, state.difficulty, state.round]);
 
+  useEffect(() => {
+    window.onbeforeunload = () => true;
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  });
+
   return (
     <div className="Game">
       <div>

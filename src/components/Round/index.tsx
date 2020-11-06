@@ -9,6 +9,7 @@ import range from "lodash/range";
 import last from "lodash/last";
 import { RoundResult, RoundState } from "model";
 import Row from "components/Row";
+import Input from "components/Input";
 import "./style.css";
 
 interface RoundProps {
@@ -26,32 +27,19 @@ export default function Round(props: RoundProps) {
 
   const [pastAttempts, setPastAttempts] = useState<Array<string>>([]);
   const [attemptsLeft, setAttemptsLeft] = useState<number>(initialAttempts);
-  const [value, setValue] = useState("");
 
-  const onChange = useCallback(
-    (ev: React.ChangeEvent<HTMLInputElement>) => {
-      setValue(ev.target.value.slice(0, wordLength));
+  const attempt = useCallback(
+    (value: string) => {
+      if (value.length !== wordLength) return;
+
+      setPastAttempts((attempts) => {
+        const newAttempts = attempts.concat();
+        newAttempts.push(value);
+        return newAttempts;
+      });
+      setAttemptsLeft((attemptsLeft) => attemptsLeft - 1);
     },
-    [wordLength]
-  );
-
-  const attempt = useCallback(() => {
-    if (value.length !== wordLength) return;
-
-    setPastAttempts((attempts) => {
-      const newAttempts = attempts.concat();
-      newAttempts.push(value.padEnd(wordLength, " "));
-      return newAttempts;
-    });
-    setAttemptsLeft((attemptsLeft) => attemptsLeft - 1);
-    setValue("");
-  }, [value, setPastAttempts, wordLength, setValue]);
-
-  const onKeyDown = useCallback(
-    (ev: React.KeyboardEvent) => {
-      if (ev.key === "Enter") attempt();
-    },
-    [attempt]
+    [setPastAttempts, wordLength]
   );
 
   const roundState = useMemo(() => {
@@ -61,46 +49,59 @@ export default function Round(props: RoundProps) {
   }, [attemptsLeft, pastAttempts, word]);
 
   useEffect(() => {
-    setPastAttempts([]);
-    inputRef.current?.focus();
-  }, [word, wordLength]);
-
-  useEffect(() => {
-    if (roundState === RoundState.Ongoing) return;
-
-    onEnd(roundState);
+    if (roundState !== RoundState.Ongoing) onEnd(roundState);
   }, [roundState, onEnd]);
 
   useEffect(() => {
     if (pastAttempts.length && last(pastAttempts) !== word) onFailedAttempt();
   }, [pastAttempts, word, onFailedAttempt]);
 
+  useEffect(() => {
+    inputRef.current?.focus();
+  }, []);
+
+  const knownLetters: string = useMemo(() => {
+    let known = word[0] + " ".repeat(word.length - 1);
+
+    for (let pastAttempt of pastAttempts) {
+      for (let position = 1; position < word.length; position++) {
+        const attemptLetter = pastAttempt[position];
+        if (word[position] === attemptLetter)
+          known = replaceAt(known, position, attemptLetter);
+      }
+    }
+
+    return known;
+  }, [word, pastAttempts]);
+
   return (
     <div className="Round">
-      <div className="Round--known">
-        The first letter is "{word[0].toUpperCase()}".
-      </div>
-
       <div className="Round--grid">
         {pastAttempts.map((attempt, position) => (
-          <Row key={attempt + position} attemptWord={attempt} goalWord={word} />
+          <Row
+            key={word + attempt + position}
+            attemptWord={attempt}
+            goalWord={word}
+          />
         ))}
 
-        {range(0, attemptsLeft).map((position) => (
-          <Row key={position} goalWord={word} />
-        ))}
+        {roundState === RoundState.Ongoing && (
+          <Row
+            key={word + "known"}
+            attemptWord={knownLetters}
+            goalWord={word}
+          />
+        )}
+
+        {roundState !== RoundState.Lost &&
+          range(1, attemptsLeft).map((position) => (
+            <Row key={word + position} goalWord={word} />
+          ))}
       </div>
 
       {roundState === RoundState.Ongoing && (
         <div className="Round--input">
-          <input
-            type="text"
-            value={value}
-            onChange={onChange}
-            onKeyDown={onKeyDown}
-            ref={inputRef}
-          />
-          <button onClick={attempt}>Attempt</button>
+          <Input length={wordLength} onAttempt={attempt} inputRef={inputRef} />
         </div>
       )}
 
@@ -112,5 +113,11 @@ export default function Round(props: RoundProps) {
         <div className="Round--text">You lost... the word was "{word}".</div>
       )}
     </div>
+  );
+}
+
+function replaceAt(str: string, index: number, replacement: string) {
+  return (
+    str.substr(0, index) + replacement + str.substr(index + replacement.length)
   );
 }
