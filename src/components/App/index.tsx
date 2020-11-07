@@ -1,17 +1,9 @@
-import React, {
-  ChangeEvent,
-  lazy,
-  Suspense,
-  useCallback,
-  useState,
-} from "react";
+import React, { ChangeEvent, useCallback, useState } from "react";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
 import Title from "components/Title";
-import { GameProvider } from "components/Game/useGame";
+import { GameHandler } from "components/Game/GameHandler";
 import "./style.css";
-
-const Game = lazy(() => import("components/Game"));
 
 export default function App() {
   const { t, i18n } = useTranslation();
@@ -32,11 +24,7 @@ export default function App() {
       </div>
 
       {inGame ? (
-        <Suspense fallback={<div>{t("COMMON.VERB.LOADING")}</div>}>
-          <GameProvider>
-            <Game />
-          </GameProvider>
-        </Suspense>
+        <GameHandler />
       ) : (
         <>
           <button onClick={() => setInGame(true)}>{t("START.BUTTON")}</button>

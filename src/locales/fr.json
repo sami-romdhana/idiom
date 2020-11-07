@@ -8,8 +8,12 @@
   "TAGLINE": "Le jeu de lettres rogue-lite",
 
   "START": {
-    "BUTTON": "Lancer le jeu",
+    "BUTTON": "Lancer une partie",
     "LANGUAGE": "Langue"
+  },
+
+  "RESTART": {
+    "BUTTON": "Lancer une nouvelle partie"
   },
 
   "GAME": {

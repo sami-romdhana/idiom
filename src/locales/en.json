@@ -12,6 +12,10 @@
     "LANGUAGE": "Language"
   },
 
+  "RESTART": {
+    "BUTTON": "Launch a new game"
+  },
+
   "GAME": {
     "INFO": {
       "HEALTH": "Health",

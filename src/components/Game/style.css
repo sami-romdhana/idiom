@@ -41,3 +41,7 @@
 .Game--valign > :last-child {
   margin-left: 0.2em;
 }
+
+.GameLost > button {
+  margin-top: 1em;
+}
