@@ -13,7 +13,6 @@ export default function Cell(props: React.PropsWithChildren<CellProps>) {
       className={classnames("Cell", {
         "Cell--correct": props.state === LetterStatus.Correct,
         "Cell--misplaced": props.state === LetterStatus.Misplaced,
-        "Cell--incorrect": props.state === LetterStatus.Incorrect,
       })}
     >
       <div>{props.children}</div>

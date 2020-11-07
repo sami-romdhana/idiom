@@ -8,6 +8,7 @@ import React, {
 import { useTranslation } from "react-i18next";
 import last from "lodash/last";
 import { RoundResult, Status } from "model";
+import { replaceAt } from "utils";
 import Row, { RowProps } from "components/Row";
 import Input from "components/Input";
 import "./style.css";
@@ -120,11 +121,5 @@ function RoundRow(props: RowProps) {
     <div className="Round--row">
       <Row {...props} />
     </div>
-  );
-}
-
-function replaceAt(str: string, index: number, replacement: string) {
-  return (
-    str.substr(0, index) + replacement + str.substr(index + replacement.length)
   );
 }

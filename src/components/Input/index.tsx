@@ -40,6 +40,7 @@ export default function Input(props: InputProps) {
         <Row
           goalWord={"_".repeat(length)}
           attemptWord={value.padEnd(length, " ")}
+          showValidity={false}
         />
 
         <input
