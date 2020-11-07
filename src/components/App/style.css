@@ -28,3 +28,9 @@
   -moz-appearance: none;
   appearance: none;
 }
+
+.App--version {
+  margin-top: 40px;
+  font-size: 0.6em;
+  opacity: 0.6;
+}

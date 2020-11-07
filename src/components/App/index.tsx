@@ -1,6 +1,7 @@
 import React, { ChangeEvent, useCallback, useState } from "react";
 import i18next from "i18next";
 import { useTranslation } from "react-i18next";
+import { version } from "../../../package.json";
 import Title from "components/Title";
 import { GameHandler } from "components/Game/GameHandler";
 import "./style.css";
@@ -50,6 +51,8 @@ export default function App() {
               <option value="fr">français</option>
             </select>
           </div>
+
+          <div className="App--version">Version {version}</div>
         </>
       )}
     </div>
