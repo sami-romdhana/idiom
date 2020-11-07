@@ -30,6 +30,7 @@ export default function GameLost() {
         <Trans
           i18nKey="END.WORD.DEFINITION"
           components={{
+            // eslint-disable-next-line jsx-a11y/anchor-has-content
             tag: <a href={link} target="_blank" rel="noopener noreferrer" />,
           }}
         />

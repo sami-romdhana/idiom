@@ -24,7 +24,7 @@ export default function Input(props: InputProps) {
   }, [length, onAttempt, value, setValue]);
 
   const onChange = useCallback((ev: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(ev.target.value);
+    setValue(ev.target.value.toLocaleLowerCase());
   }, []);
 
   const onKeyDown = useCallback(
