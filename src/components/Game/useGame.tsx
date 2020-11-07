@@ -150,5 +150,10 @@ function computeNextRound(state: GameState, result: RoundResult) {
 async function getRandomWord(length: number, locale: string) {
   const words = await getWords(locale);
   const array = words.filter((word) => word.length === length);
-  return array[Math.floor(Math.random() * array.length)];
+  const word = array[Math.floor(Math.random() * array.length)];
+
+  return {
+    original: word,
+    ascii: word.normalize("NFD").replace(/[\u0300-\u036f]/g, ""),
+  };
 }

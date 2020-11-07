@@ -29,11 +29,16 @@
 
     "BUTTON": {
       "ATTEMPT": "Essayer"
-    },
+    }
+  },
 
-    "END": {
-      "WIN": "Vous avez gagné!",
-      "LOSS": "Vous avez perdu."
+  "END": {
+    "WIN": "Vous avez gagné!",
+    "LOSS": "Vous avez perdu.",
+
+    "WORD": {
+      "PRELUDE": "Le mot que vous cherchiez était :",
+      "DEFINITION": "Vous pouvez trouver sa définition <tag>ici</tag>."
     }
   }
 }

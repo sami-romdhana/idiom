@@ -49,7 +49,7 @@ export default function GameOngoing() {
       {!!state.word ? (
         <Round
           key={state.difficulty + "-" + state.round}
-          word={state.word}
+          word={state.word.ascii}
           initialAttempts={state.attempts}
           onEnd={onRoundEnd}
           onFailedAttempt={onFailedAttempt}

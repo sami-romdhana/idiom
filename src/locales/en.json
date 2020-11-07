@@ -29,11 +29,16 @@
 
     "BUTTON": {
       "ATTEMPT": "Attempt"
-    },
+    }
+  },
 
-    "END": {
-      "WIN": "You have won!",
-      "LOSS": "You have lost."
+  "END": {
+    "WIN": "You have won!",
+    "LOSS": "You have lost.",
+
+    "WORD": {
+      "PRELUDE": "The word you were looking for was:",
+      "DEFINITION": "You can find the definition <tag>here</tag>."
     }
   }
 }

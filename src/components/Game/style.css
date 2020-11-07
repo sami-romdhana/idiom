@@ -42,6 +42,25 @@
   margin-left: 0.2em;
 }
 
+.GameLost > p {
+  font-size: 0.8em;
+}
+
+.GameLost > :not(:last-child) {
+  margin-bottom: 1em;
+}
+
+.GameLost > h2 {
+  margin-top: 2em;
+  font-size: 2em;
+  font-weight: 900;
+}
+
+.GameLost--word {
+  font-style: italic;
+  font-size: 1.2em;
+}
+
 .GameLost > button {
   margin-top: 1em;
 }

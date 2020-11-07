@@ -17,7 +17,7 @@ export interface GameState {
   status: Status;
   difficulty: number;
   round: number;
-  word: string | null;
+  word: Word | null;
   armor: DefensePart;
   health: DefensePart;
   attempts: number;
@@ -31,4 +31,9 @@ export interface DefensePart {
 export enum Locale {
   EN = "en",
   FR = "fr",
+}
+
+export interface Word {
+  original: string;
+  ascii: string;
 }

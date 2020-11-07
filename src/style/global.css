@@ -18,7 +18,9 @@ textarea {
 button,
 input,
 select,
-textarea {
+textarea,
+a {
+  color: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
@@ -52,4 +54,13 @@ button:hover {
   border-color: transparent;
   background: var(--color-border);
   color: var(--color-background);
+}
+
+a {
+  text-decoration: none;
+  border-bottom: 1px dotted currentColor;
+}
+
+a:hover {
+  border-bottom-style: solid;
 }
