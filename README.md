@@ -14,3 +14,9 @@
 ```
 npm install
 ```
+
+### Deployment
+
+```
+npm run deploy
+```
